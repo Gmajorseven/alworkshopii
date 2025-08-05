@@ -1,0 +1,28 @@
+{
+  "id": "a78c431b-00df-4b56-a19a-a2c3071c5389",
+  "name": "alworkshopii",
+  "publisher": "Default Publisher",
+  "version": "1.0.0.0",
+  "brief": "",
+  "description": "",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "15.4.41023.43755",
+  "idRanges": [
+    {
+      "from": 50100,
+      "to": 50149
+    }
+  ],
+  "showMyCode": true,
+  "runtime": "4.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
