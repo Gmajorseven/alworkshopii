@@ -12,8 +12,10 @@ pageextension 50104 ConfirmationforESDComment extends "Sales & Receivables Setup
                 var
                     ConfirmQst: Label 'Do you want to insert the comment Yes/No?';
                 begin
-                    if not Confirm(ConfirmQst) then
-                        Error('');
+                    if Confirm(ConfirmQst) then
+                        Rec."Confirmation for ESD Comment" := true
+                    else
+                        Rec."Confirmation for ESD Comment" := false;
                 end;
             }
         }
