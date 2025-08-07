@@ -1,4 +1,4 @@
-tableextension 50106 "ESDCommentSales Invoice Header" extends "Sales Invoice Header"
+tableextension 50107 ESDCommentPurchInvLine extends "Purch. Inv. Line"
 {
     fields
     {
