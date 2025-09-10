@@ -5,14 +5,18 @@ codeunit 50100 TransferESDComment
     var
         Customer: Record Customer;
         SalesandRecivableSetup: Record "Sales & Receivables Setup";
+        ConfirmQst: Label 'Do you want to insert the comment Yes/No?';
     begin
         SalesandRecivableSetup.Get();
-        if SalesandRecivableSetup."Confirmation for ESD Comment" then begin
-            if Customer.Get(SalesHeader."Sell-to Customer No.") then begin
-                if Customer."Transfer Comment" then
-                    SalesLine."ESD Comment" := Customer."ESD Comment";
-            end;
-        end;
+        if Confirm(ConfirmQst) then begin
+            SalesandRecivableSetup."Confirmation for ESD Comment" := true;
+            if SalesandRecivableSetup."Confirmation for ESD Comment" then
+                if Customer.Get(SalesHeader."Sell-to Customer No.") then
+                    if Customer."Transfer Comment" then
+                        SalesLine."ESD Comment" := Customer."ESD Comment";
+        end
+        else
+            SalesandRecivableSetup."Confirmation for ESD Comment" := false;
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Purchase Line", 'OnAfterInitHeaderDefaults', '', false, false)]
@@ -20,13 +24,17 @@ codeunit 50100 TransferESDComment
     var
         Vendor: Record Vendor;
         SalesandRecivableSetup: Record "Sales & Receivables Setup";
+        ConfirmQst: Label 'Do you want to insert the comment Yes/No?';
     begin
         SalesandRecivableSetup.Get();
-        if SalesandRecivableSetup."Confirmation for ESD Comment" then begin
-            if Vendor.Get(PurchHeader."Buy-from Vendor No.") then begin
-                if Vendor."Transfer Comment" then
-                    PurchLine."ESD Comment" := Vendor."ESD Comment";
-            end;
-        end;
+        if Confirm(ConfirmQst) then begin
+            SalesandRecivableSetup."Confirmation for ESD Comment" := true;
+            if SalesandRecivableSetup."Confirmation for ESD Comment" then
+                if Vendor.Get(PurchHeader."Buy-from Vendor No.") then
+                    if Vendor."Transfer Comment" then
+                        PurchLine."ESD Comment" := Vendor."ESD Comment";
+        end
+        else
+            SalesandRecivableSetup."Confirmation for ESD Comment" := false;
     end;
 }
