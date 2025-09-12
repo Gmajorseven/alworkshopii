@@ -23,6 +23,7 @@ page 50100 "Inventory By Location FactBox"
             field("Remaining Quantity"; Rec."Remaining Quantity")
             {
                 ApplicationArea = Planning;
+                ToolTip = 'Specifies the remaining quantity of the item in the specified location.';
             }
 
         }
@@ -32,13 +33,13 @@ page 50100 "Inventory By Location FactBox"
         GlobalItemNo: Code[20];
         GlobalLocationCode: Code[20];
 
-    procedure FilData()
+    procedure CalculateInventoryQuantity()
     var
         LocationCode: Code[20];
-        RemaimingQty: Decimal;
+        RemainingQty: Decimal;
         // num: Integer;
         // LocationList: List of [Code[20]];
-        ILE: Record "Item Ledger Entry";
+        ItemLedgerEntry: Record "Item Ledger Entry";
         EntryNo: Integer;
     begin
         Rec.DeleteAll();
@@ -47,50 +48,49 @@ page 50100 "Inventory By Location FactBox"
             EntryNo := Rec."Entry No." + 1
         else
             EntryNo := 1;
+        ItemLedgerEntry.Reset();
+        ItemLedgerEntry.SetCurrentKey("Location Code");
+        ItemLedgerEntry.SetAscending("Location Code", true);
+        ItemLedgerEntry.SetRange("Item No.", GlobalItemNo);
+        ItemLedgerEntry.SetRange("Location Code", GlobalLocationCode);
 
-        ILE.Reset();
-        ILE.SetCurrentKey("Location Code");
-        ILE.SetAscending("Location Code", true);
-        ILE.SetRange("Item No.", GlobalItemNo);
-        ILE.SetRange("Location Code", GlobalLocationCode);
-
-        // if ILE.FindSet() then
+        // if ItemLedgerEntry.FindSet() then
         //     repeat
-        //         if not LocationList.Contains(ILE."Location Code") then
-        //             LocationList.Add(ILE."Location Code");
-        //     until ILE.Next() = 0;
+        //         if not LocationList.Contains(ItemLedgerEntry."Location Code") then
+        //             LocationList.Add(ItemLedgerEntry."Location Code");
+        //     until ItemLedgerEntry.Next() = 0;
 
         // for num := 1 to LocationList.Count() do begin
         //     LocationCode := LocationList.Get(num);
-        //     ILE.SetRange("Location Code", LocationCode);
-        //     RemaimingQty := 0;
-        //     ILE.CalcSums(Quantity);
-        //     RemaimingQty := ILE.Quantity;
+        //     ItemLedgerEntry.SetRange("Location Code", LocationCode);
+        //     RemainingQty := 0;
+        //     ItemLedgerEntry.CalcSums(Quantity);
+        //     RemainingQty := ItemLedgerEntry.Quantity;
 
         //     Rec.Init();
         //     Rec."Entry No." := num;
         //     Rec."Item No." := GlobalItemNo;
         //     Rec."Location Code" := LocationCode;
-        //     Rec."Remaining Quantity" := RemaimingQty;
+        //     Rec."Remaining Quantity" := RemainingQty;
         //     Rec.Insert();
         // end; // If seperate locations are needed, uncomment this block and comment the next one and not require LocationCode filter
 
-        RemaimingQty := 0;
-        ILE.CalcSums(Quantity);
-        RemaimingQty := ILE.Quantity;
+        RemainingQty := 0;
+        ItemLedgerEntry.CalcSums(Quantity);
+        RemainingQty := ItemLedgerEntry.Quantity;
 
         Rec.Init();
         Rec."Entry No." := EntryNo;
         Rec."Item No." := GlobalItemNo;
         Rec."Location Code" := GlobalLocationCode;
-        Rec."Remaining Quantity" := RemaimingQty;
+        Rec."Remaining Quantity" := RemainingQty;
         Rec.Insert();
     end;
 
-    internal procedure Update(ItemNo: Code[20]; LocationCode: Code[20])
+    internal procedure UpdateInventoryQuantity(ItemNo: Code[20]; LocationCode: Code[20])
     begin
         GlobalItemNo := ItemNo;
         GlobalLocationCode := LocationCode;
-        FilData();
+        CalculateInventoryQuantity();
     end;
 }

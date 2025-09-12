@@ -16,7 +16,7 @@ pageextension 50105 "Inventory By Location" extends "Planning Worksheet"
 
     trigger OnAfterGetCurrRecord()
     begin
-        CurrPage.InventoryFactbox.Page.Update(Rec."No.", Rec."Location Code");
+        CurrPage.InventoryFactbox.Page.UpdateInventoryQuantity(Rec."No.", Rec."Location Code");
     end;
 
 }
