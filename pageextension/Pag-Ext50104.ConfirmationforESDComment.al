@@ -8,15 +8,15 @@ pageextension 50104 ConfirmationforESDComment extends "Sales & Receivables Setup
             {
                 ApplicationArea = All;
                 ToolTip = 'Enter any comments related to the ESD (Enterprise Solutions & Development) for this sales order.';
-                trigger OnValidate()
-                var
-                    ConfirmQst: Label 'Do you want to insert the comment Yes/No?';
-                begin
-                    if Confirm(ConfirmQst) then
-                        Rec."Confirmation for ESD Comment" := true
-                    else
-                        Rec."Confirmation for ESD Comment" := false;
-                end;
+                // trigger OnValidate()
+                // var
+                //     ConfirmQst: Label 'Do you want to insert the comment Yes/No?';
+                // begin
+                //     if Confirm(ConfirmQst) then
+                //         Rec."Confirmation for ESD Comment" := true
+                //     else
+                //         Rec."Confirmation for ESD Comment" := false;
+                // end;
             }
         }
     }
