@@ -8,7 +8,7 @@ pageextension 50103 "ESDCmtPurchase Order Subform" extends "Purchase Order Subfo
             {
                 ApplicationArea = All;
                 Editable = false;
-                ToolTip = 'Enter any comments related to the ESD (Enterprise Solutions & Development) for this sales order.';
+                ToolTip = 'Enter any comments related to the ESD (Enterprise Solutions & Development) for this purchase order.';
             }
         }
     }
